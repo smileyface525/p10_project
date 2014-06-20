@@ -1,12 +1,18 @@
 
 $(document).ready(function() {
-  $('#map-canvas').hide;
+
   $('button').on('click', function(){
+  var latLngRequest = $.ajax({
+    url: '/users/map',
+    type: 'GET'
+  })
+  latLngRequest.done(function(location){
+    console.log(location)
+  })
     initialize(myLocation);
-    $('#map-canvas').show;
     var totalTime = Number(document.getElementById("time").value);
-    var halfTime = totalTime/3.2;
-    var distanceInMiles = (halfTime)*(3.1/60);
+    var distanceInMiles = (totalTime/2)*(3.1/60);
+    var distanceInMiles = Number(document.getElementById("distance").value);
     var distanceInCoord = distanceInMiles*(1/69);
 
     var southEastLat = locLat - distanceInCoord;
@@ -25,8 +31,8 @@ $(document).ready(function() {
     var southWest = new google.maps.LatLng(southWestLat, southWestLng);
     var northEast = new google.maps.LatLng(northEastLat, northEastLng);
     var northWest = new google.maps.LatLng(northWestLat, northWestLng);
-    //calcRoute(myLocation, southWest);
-    //calcRoute(myLocation, northWest);
+    calcRoute(myLocation, southWest);
+    calcRoute(myLocation, northWest);
     var routes = [southEast, southWest, northEast, northWest]
     for (var i = 0; i < routes.length; i++) {
       addMarkerWithLabel(routes[i], "Route " + (i+1), myLocation)
@@ -53,7 +59,7 @@ function initialize(currentLocation) {
   map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
   directionsDisplay.setMap(map);
   directionsDisplay.setPanel(document.getElementById("directionsPanel"));
-  addHomeMarker();
+  addMarkerWithLabel(currentLocation, 'Home!')
 
 }
 
@@ -74,16 +80,6 @@ var calcRoute = function(startLoc, endLoc) {
   });
 }
 
-var addHomeMarker = function(){
-
-  var myMarker = new google.maps.Marker({
-      position: myLocation,
-      map: map,
-      icon: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcT_aqLoKBTUwNYFbrL7zWegN4-ffB-xGk6QYzSaMFiL42Q2FThUuA'
-  });
-  //mapWindow.open(map, myMarker);
-}
-
 var addMarkerWithLabel = function(location, message, startPoint){
   var myMarker = new google.maps.Marker({
         position: location,
@@ -91,10 +87,10 @@ var addMarkerWithLabel = function(location, message, startPoint){
         draggable: true,
         labelAnchor: new google.maps.Point(22, 0),
     });
-    var mapWindow = new google.maps.InfoWindow({
+    var iw = new google.maps.InfoWindow({
       content: message
     });
-    mapWindow.open(map, myMarker);
+    iw.open(map, myMarker);
     if ( typeof startPoint !== 'undefined') {
       google.maps.event.addListener(myMarker, "click", function (e) {
         calcRoute(startPoint, location);

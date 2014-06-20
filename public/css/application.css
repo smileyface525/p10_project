@@ -1,0 +1,91 @@
+html { height: 100% }
+body { 
+    height: 100%; 
+    margin: 0; 
+    padding: 0;
+    font-size: 2em;
+    margin: 5%;
+}
+
+/* unvisited link */
+a:link {
+    color: #999999;
+}
+a {
+    text-decoration: none;
+    font-size: 1.1em;
+}
+/* visited link */
+a:visited {
+    color: #999999;
+}
+
+/* mouse over link */
+a:hover {
+    color: #999999;
+}
+
+/* selected link */
+a:active {
+    color: #0000FF;
+}
+
+#dog-image {
+    width: 30%;
+    height: 30%;
+}
+
+/* resize images */
+#dog-image img {
+    width: 100%;
+    height: auto;
+}
+
+div.time {
+    margin-top: 4%;
+    margin-bottom: 6%;
+}
+
+#time {
+    margin-right: 1.5%;
+    
+}
+
+#map-canvas { 
+    margin-top: 0%;
+    margin-right:6%;
+    height: 60%; 
+    width: 60%;
+}
+
+#div.adp {
+    width: 25%;
+}
+
+#direction-panel{
+    float:right; 
+    width:25%; 
+    height: 70%;
+}
+
+div.warnbox-content {
+    display: none;
+}
+
+div.warnbox-c1 {
+    display: none;
+}
+
+div.warnbox-c2 {
+    display: none;
+}
+
+footer {
+    clear: both;
+}
+
+footer p {
+    text-align: center;
+}
+
+
